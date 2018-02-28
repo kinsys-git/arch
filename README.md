@@ -8,9 +8,11 @@ Basic arch installer
 3. Partition your disks, and remember or write down where you want your mounts
 4. Format your partitions - home partition optional (mkfs.ext4 /dev/(<PARTITION>)
 5. Run the following commands:
-	wget https://raw.githubusercontent.com/maelodic/arch/master/install.sh
-	chmod +x install.sh
-	./install.sh
+```
+wget https://raw.githubusercontent.com/maelodic/arch/master/install.sh
+chmod +x install.sh
+./install.sh
+```
 
 The installer will take you through the rest.
 
