@@ -157,13 +157,13 @@ main() {
 	initpackages	#Update reps
 	hostname	#Setup hostname
 	timekeeping	#Set up timzone and generate the locale
-  makeswap    #Install swapfile if selected
+	makeswap	#Install swapfile if selected
 	drivers 	#Install drivers if previously specified
 	adduser		#Add user with sudoers access
-	pacaurinstall		#Install pacaur
-	kdecustom   #Install KDE custom setup if selected
+	kdecustom   	#Install KDE custom setup if selected
 	software	#Install additional software
-	wminstall   #Install WM
+	wminstall   	#Install WM
+	pacaurinstall	#Install pacaur
 	bootloader	#Set up grub
 	passwords	#Set user and root passwords
 	rm /root/chroot.sh
