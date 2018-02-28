@@ -6,7 +6,7 @@ Basic arch installer
 1. Boot into the Arch Linux iso
 2. Connect to the internet
 3. Partition your disks, and remember or write down where you want your mounts
-4. Format your partitions - home partition optional (mkfs.ext4 /dev/(<PARTITION>)
+4. Format your partitions - home partition optional (mkfs.ext4 /dev/[PARTITION])
 5. Run the following commands:
 ```
 wget https://raw.githubusercontent.com/maelodic/arch/master/install.sh
