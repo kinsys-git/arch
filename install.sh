@@ -6,7 +6,7 @@ variables() {
 	read hostname
 	export hostname
 	clear
-	echo "Boot disk? \(Ex. /dev/sda\): "
+	echo "Boot disk? (Ex. /dev/sda): "
 	read bootDisk
 	export bootDisk
 	clear
