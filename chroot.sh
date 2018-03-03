@@ -71,16 +71,11 @@ pacaurinstall() {
 	clear
 	if [ "$pacaurChoice" == y -o "$pacaurChoice" == Y ]
 		then
-			echo "Installing pacaur"
-  	pacman -S expac yajl git perl-error --noconfirm --needed
-	  su "$userName" -c "mkdir /home/$userName/build-dir"
-	  su "$userName" -c "cd /home/$userName/build-dir && wget https://aur.archlinux.org/cgit/aur.git/snapshot/cower.tar.gz && tar xzvf cower.tar.gz"
-	  su "$userName" -c "cd /home/$userName/build-dir/cower && makepkg -s --skippgpcheck"
-	  pacman -U /home/"$userName"/build-dir/cower/*.xz --noconfirm
-	  su "$userName" -c "cd /home/$userName/build-dir && wget https://aur.archlinux.org/cgit/aur.git/snapshot/pacaur.tar.gz && tar xzvf pacaur.tar.gz"
-  	su "$userName" -c "cd /home/$userName/build-dir/pacaur && makepkg -s"
-  	pacman -U /home/"$userName"/build-dir/pacaur/*.xz --noconfirm
-  	rm -rf /home/$userName/build-dir
+		su "$userName" -c "git clone https://github.com/actionless/pikaur.git"
+		cd pikaur
+		su "$userName" -c "makepkg -fsri"
+		cd ..
+		rm -rf pikaur	
 	fi
 
 }

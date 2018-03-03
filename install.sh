@@ -91,7 +91,7 @@ variables() {
 		export swapsize
 	fi
 	clear
-	echo "Install pacaur? (Y/n): "
+	echo "Install pikaur? (Y/n): "
 	read pacaurChoice
 	export pacaurChoice
 }
