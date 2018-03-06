@@ -144,7 +144,7 @@ install() {
 
 passtochroot() {
 	cd /mnt/root
-	wget https://raw.githubusercontent.com/maelodic/maelo-arch-install-kde/personal/chroot.sh
+	wget https://raw.githubusercontent.com/maelodic/arch/testing/chroot.sh
 	chmod +x chroot.sh
 	arch-chroot /mnt /bin/bash /root/chroot.sh
 }
