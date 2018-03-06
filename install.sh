@@ -56,6 +56,7 @@ variables() {
 		echo "Home partition: "
 		read homePart
 	fi
+	clear
 	echo "Intel Graphics Drivers? (y/N): "
 	read intelGfx
 	export intelGfx
