@@ -144,7 +144,7 @@ install() {
 
 passtochroot() {
 	cd /mnt/root
-	wget https://raw.githubusercontent.com/maelodic/arch/testing/chroot.sh
+	wget https://raw.githubusercontent.com/maelodic/arch/testing/chroot.sh --no-cache
 	chmod +x chroot.sh
 	arch-chroot /mnt /bin/bash /root/chroot.sh
 }
