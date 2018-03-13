@@ -56,6 +56,7 @@ variables() {
 		echo "Home partition: "
 		read homePart
 	fi
+	clear
 	echo "Intel Graphics Drivers? (y/N): "
 	read intelGfx
 	export intelGfx
@@ -91,7 +92,7 @@ variables() {
 		export swapsize
 	fi
 	clear
-	echo "Install pacaur? (Y/n): "
+	echo "Install pikaur? (Y/n): "
 	read pacaurChoice
 	export pacaurChoice
 }
@@ -144,7 +145,7 @@ install() {
 
 passtochroot() {
 	cd /mnt/root
-	wget https://raw.githubusercontent.com/maelodic/maelo-arch-install-kde/personal/chroot.sh
+	wget https://raw.githubusercontent.com/maelodic/arch/testing/chroot.sh --no-cache
 	chmod +x chroot.sh
 	arch-chroot /mnt /bin/bash /root/chroot.sh
 }
