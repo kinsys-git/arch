@@ -72,10 +72,10 @@ pacaurinstall() {
 	if [ "$pacaurChoice" == y -o "$pacaurChoice" == Y ]
 		then
 		su "$userName" -c "git clone https://aur.archlinux.org/pikaur-git"
-		cd pikaur
+		cd pikaur-git
 		su "$userName" -c "makepkg -fsri"
 		cd ..
-		rm -rf pikaur
+		rm -rf pikaur-git
 	fi
 
 }
