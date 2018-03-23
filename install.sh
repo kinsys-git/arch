@@ -92,9 +92,9 @@ variables() {
 		export swapsize
 	fi
 	clear
-	echo "Install pikaur? (Y/n): "
-	read pacaurChoice
-	export pacaurChoice
+	#echo "Install pikaur? (Y/n): "
+	#read pacaurChoice
+	#export pacaurChoice
 }
 
 mounting() {
