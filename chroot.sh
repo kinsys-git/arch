@@ -149,7 +149,7 @@ passwords() {
 }
 
 dotfiles() {
-	if [ "$dotfile" == i3 ]
+	if [ "$dotfile" == i ]
 	then
 		su "$userName" -c "cd ~"
 		su "$userName" -c "mkdir tmp"
@@ -172,8 +172,8 @@ main() {
 	wminstall   	#Install WM
 	pacaurinstall	#Install pacaur
 	bootloader	#Set up grub
+	dotfiles	#Personalized install
 	passwords	#Set user and root passwords
-	dotfiles
 	rm /root/chroot.sh
 }
 

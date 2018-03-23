@@ -67,6 +67,7 @@ variables() {
 	read nvidiaGfx
 	export nvidiaGfx
 	clear
+	echo "$dotfile"
 	echo "Pick a WM"
 	echo "(1) KDE Custom"
 	echo "(2) KDE Stock"
