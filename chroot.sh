@@ -148,6 +148,18 @@ passwords() {
 	passwd "$userName"
 }
 
+dotfiles() {
+	if [ "$dotfile" == i3 ]
+	then
+		su "$userName" -c "cd ~"
+		su "$userName" -c "mkdir tmp"
+		su "$userName" -c "git clone https://github.com/maelodic/dotfiles"
+		su "$userName" -c "cd dotfiles"
+		su "$userName" -c "chmod +x all.sh"
+		su "$userName" -c "sh all.sh"
+	fi
+}
+
 main() {
 	initpackages	#Update reps
 	hostname	#Setup hostname
@@ -161,6 +173,7 @@ main() {
 	pacaurinstall	#Install pacaur
 	bootloader	#Set up grub
 	passwords	#Set user and root passwords
+	dotfiles
 	rm /root/chroot.sh
 }
 

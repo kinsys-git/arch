@@ -160,6 +160,8 @@ end() {
 }
 
 main() {
+ 	dotfile=$1
+	export dotfile
 	variables	#Get information needed from user in the very beginning
 	mounting	#Set up mounts
 	mirrors		#Set up fastest mirrors for install process
