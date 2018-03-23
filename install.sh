@@ -67,7 +67,6 @@ variables() {
 	read nvidiaGfx
 	export nvidiaGfx
 	clear
-	echo "$dotfile"
 	echo "Pick a WM"
 	echo "(1) KDE Custom"
 	echo "(2) KDE Stock"
@@ -161,8 +160,6 @@ end() {
 }
 
 main() {
- 	dotfile=$1
-	export dotfile
 	variables	#Get information needed from user in the very beginning
 	mounting	#Set up mounts
 	mirrors		#Set up fastest mirrors for install process

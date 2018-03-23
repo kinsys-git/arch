@@ -82,7 +82,7 @@ pacaurinstall() {
 
 wminstall() {
 	clear
-	if [ "$wmChoice" = "1" -o "$wmChoice" = "2" -o "$wmChoice" = "3" -o "$wmChoice" = "4" -o "$wmChoice" = "5" ]
+	if [ "$wmChoice" = "1" -o "$wmChoice" = "2" -o "$wmChoice" = "3" -o "$wmChoice" = "4" -o "$wmChoice" = "5" -p "$wmChoice" = "straws" ]
 	then
 		echo "Setting up WM"
   	if [ "$wmChoice" = "1" ]
@@ -94,7 +94,7 @@ wminstall() {
   	elif [ "$wmChoice" = "3" ]
   	then
   		pacman -S gnome gdm --noconfirm --needed
-  	elif [ "$wmChoice" = "4" ]
+  	elif [ "$wmChoice" = "4" -o "$wmChoice" = "straws" ]
   	then
   		pacman -S i3 dmenu network-manager-applet blueman sddm --noconfirm --needed
   	elif [ "$wmChoice" = "5" ]
@@ -149,7 +149,7 @@ passwords() {
 }
 
 dotfiles() {
-	if [ "$dotfile" == i ]
+	if [ "$wmChoice" = "straws" ]
 	then
 		su "$userName" -c "cd ~"
 		su "$userName" -c "mkdir tmp"
