@@ -36,11 +36,17 @@ makeswap() {
 }
 
 bootloader() {
-	clear
-	echo "Setting up bootloader"
-	mkinitcpio -p linux
-	grub-install --recheck --target=i386-pc $bootDisk
-	grub-mkconfig -o /boot/grub/grub.cfg
+	shopt -s nocasematch
+	if [ "$uefiboot" -ne y ]
+	then
+		clear
+		echo "Setting up bootloader"
+		pacman -S grub --noconfirm --needed
+		mkinitcpio -p linux
+		grub-install --recheck --target=i386-pc $bootDisk
+		grub-mkconfig -o /boot/grub/grub.cfg
+	fi
+	shopt -u nocasematch
 }
 
 drivers() {
@@ -127,12 +133,12 @@ kdecustom() {
 software() {
 	clear
 	echo "Setting up additional software"
-	pacman -S wget rsync wpa_supplicant bc grub efibootmgr os-prober sudo networkmanager reflector git dialog sddm xorg-server xorg-font-util xorg-xinit xterm xf86-video-vesa xf86-input-synaptics vim xorg-xkill --noconfirm --needed
+	pacman -S wget rsync wpa_supplicant bc efibootmgr os-prober sudo networkmanager reflector git dialog sddm xorg-server xorg-font-util xorg-xinit xterm xf86-video-vesa xf86-input-synaptics vim xorg-xkill --noconfirm --needed
        	if [ "$wmChoice" = "3" ]
        		then
 		systemctl enable gdm.service
 		systemctl enable NetworkManager
-	elif [ "$wmChoice" = "1" -o "$wmChoice" = "2" -o "$wmChoice" = "4" -o "$wmChoice" = "5" ]
+	elif [ "$wmChoice" = "1" -o "$wmChoice" = "2" -o "$wmChoice" = "4" -o "$wmChoice" = "5" -i "$wmChoice" = "straws" ]
 		then
 		systemctl enable sddm.service
 		systemctl enable NetworkManager
@@ -151,11 +157,10 @@ passwords() {
 dotfiles() {
 	if [ "$wmChoice" = "straws" ]
 	then
-		su "$userName" -c "cd ~"
-		su "$userName" -c "mkdir tmp"
-		su "$userName" -c "git clone https://github.com/maelodic/dotfiles"
-		su "$userName" -c "cd dotfiles"
-		su "$userName" -c "chmod +x all.sh"
+		cd /home/$userName
+		wget https://raw.githubusercontent.com/maelodic/dotfiles/master/all.sh --no-cache
+		chmod +x all.sh
+		chown $userName.$userName all.sh
 		su "$userName" -c "sh all.sh"
 	fi
 }

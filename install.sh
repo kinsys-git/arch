@@ -57,6 +57,15 @@ variables() {
 		read homePart
 	fi
 	clear
+	echo "Is your system UEFI? (y/N)"
+	read uefi
+	if [ "$uefi" = y -o "$uefi" = Y ]
+	then
+		echo "Do you want to use UEFI boot loader instead of GRUB? (Y/n)"
+		read uefiboot
+		export uefiboot
+	fi
+	clear
 	echo "Intel Graphics Drivers? (y/N): "
 	read intelGfx
 	export intelGfx
@@ -106,14 +115,30 @@ mounting() {
 	elif [ "$mountChoice" = "2" ]
 		then
 		mount $rootPart /mnt
-		mkdir /mnt/boot
-		mount $bootPart /mnt/boot
+		if [ "$uefiboot" = n -o "$uefiboot" = N ]
+		then
+			mkdir /mnt/boot
+			mkdir /mnt/boot/efi
+			mount $bootpart /mnt/boot/efi
+		else
+		then
+			mkdir /mnt/boot
+			mount $bootpart /mnt/boot
+		fi
 	elif [ "$mountChoice" = "3" ]
 		then
 		mount $rootPart /mnt
-		mkdir /mnt/boot
+		if [ "$uefiboot" = n -o "$uefiboot" = N ]
+		then
+			mkdir /mnt/boot
+			mkdir /mnt/boot/efi
+			mount $bootpart /mnt/boot/efi
+		else
+		then
+			mkdir /mnt/boot
+			mount $bootpart /mnt/boot
+		fi
 		mkdir /mnt/home
-		mount $bootPart /mnt/boot
 		mount $homePart /mnt/home
 	elif [ "$mountChoice" = "4" ]
 		then
