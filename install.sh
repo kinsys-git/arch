@@ -59,6 +59,7 @@ variables() {
 	clear
 	echo "Is your system UEFI? (y/N)"
 	read uefi
+	export uefi
 	if [ "$uefi" = y -o "$uefi" = Y ]
 	then
 		echo "Do you want to use UEFI boot loader instead of GRUB? (Y/n)"

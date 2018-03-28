@@ -37,13 +37,21 @@ makeswap() {
 
 bootloader() {
 	shopt -s nocasematch
-	if [ "$uefiboot" -ne y ]
+	if [ "$uefi" -e n ]
 	then
 		clear
 		echo "Setting up bootloader"
 		pacman -S grub --noconfirm --needed
 		mkinitcpio -p linux
 		grub-install --recheck --target=i386-pc $bootDisk
+		grub-mkconfig -o /boot/grub/grub.cfg
+	elif [ "$uefi" -e y ] && [ "$uefiboot" -ne n ]
+	then
+		clear
+		echo "Setting up bootloader"
+		pacman -S grub efibootmgr --noconfirm --needed
+		mkinitcpio -p linux
+		grub-install --target=x86_x64-efi --efi-directory=/boot/efi --bootloader-id=arch_grub
 		grub-mkconfig -o /boot/grub/grub.cfg
 	fi
 	shopt -u nocasematch
