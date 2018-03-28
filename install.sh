@@ -121,7 +121,6 @@ mounting() {
 			mkdir /mnt/boot/efi
 			mount $bootpart /mnt/boot/efi
 		else
-		then
 			mkdir /mnt/boot
 			mount $bootpart /mnt/boot
 		fi
@@ -134,7 +133,6 @@ mounting() {
 			mkdir /mnt/boot/efi
 			mount $bootpart /mnt/boot/efi
 		else
-		then
 			mkdir /mnt/boot
 			mount $bootpart /mnt/boot
 		fi
