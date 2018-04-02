@@ -127,10 +127,10 @@ mounting() {
 		then
 			mkdir /mnt/boot
 			mkdir /mnt/boot/efi
-			mount $bootpart /mnt/boot/efi
+			mount $bootPart /mnt/boot/efi
 		else
 			mkdir /mnt/boot
-			mount $bootpart /mnt/boot
+			mount $bootPart /mnt/boot
 		fi
 	elif [ "$mountChoice" = "3" ]
 		then
@@ -139,10 +139,10 @@ mounting() {
 		then
 			mkdir /mnt/boot
 			mkdir /mnt/boot/efi
-			mount $bootpart /mnt/boot/efi
+			mount $bootPart /mnt/boot/efi
 		else
 			mkdir /mnt/boot
-			mount $bootpart /mnt/boot
+			mount $bootPart /mnt/boot
 		fi
 		mkdir /mnt/home
 		mount $homePart /mnt/home
