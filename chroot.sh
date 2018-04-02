@@ -56,6 +56,7 @@ bootloader() {
 	elif [ "$uefiboot" -e y ]
 	then
 		pacman -S efibootmgr dosfstools --noconfirm --needed
+		mkinitcpio -p linux
 		efibootmgr --disk $bootDisk --part $bootPartNumber --create --gpt --label "Arch Linux" --loader /vmlinuz-linux --unicode "root=$rootPart rw initrd=/initramfs-linux.img" 
 	fi
 	shopt -u nocasematch
