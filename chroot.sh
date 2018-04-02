@@ -49,9 +49,9 @@ bootloader() {
 	then
 		clear
 		echo "Setting up bootloader"
-		pacman -S grub efibootmgr dosfstools--noconfirm --needed
+		pacman -S grub efibootmgr dosfstools --noconfirm --needed
 		mkinitcpio -p linux
-		grub-install --target=x86_x64-efi --efi-directory=/boot/efi --bootloader-id=arch_grub
+		grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=arch_grub
 		grub-mkconfig -o /boot/grub/grub.cfg
 	elif [ "$uefiboot" -e y ]
 	then
