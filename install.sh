@@ -69,8 +69,8 @@ variables() {
 		then
 			echo " "
 			echo "What partition number is the EFI partition? (Ex. 1)"
-			read $bootPartNumber
-			export $bootPartNumber
+			read bootPartNumber
+			export bootPartNumber
 		fi
 	fi
 	clear
