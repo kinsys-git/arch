@@ -65,6 +65,13 @@ variables() {
 		echo "Do you want to use UEFI boot loader instead of GRUB? (Y/n)"
 		read uefiboot
 		export uefiboot
+		if [ "$uefiboot" = y -o "$uefiboot" = -Y ]
+		then
+			echo " "
+			echo "What partition number is the EFI partition? (Ex. 1)"
+			read $bootPartNumber
+			export $bootPartNumber
+		fi
 	fi
 	clear
 	echo "Intel Graphics Drivers? (y/N): "

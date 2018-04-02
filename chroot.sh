@@ -49,10 +49,14 @@ bootloader() {
 	then
 		clear
 		echo "Setting up bootloader"
-		pacman -S grub efibootmgr --noconfirm --needed
+		pacman -S grub efibootmgr dosfstools--noconfirm --needed
 		mkinitcpio -p linux
 		grub-install --target=x86_x64-efi --efi-directory=/boot/efi --bootloader-id=arch_grub
 		grub-mkconfig -o /boot/grub/grub.cfg
+	elif [ "$uefiboot" -e y ]
+	then
+		pacman -S efibootmgr dosfstools --noconfirm --needed
+		efibootmgr --disk $bootDisk --part $bootPartNumber --create --gpt --label "Arch Linux" --loader /vmlinuz-linux --unicode "root=$rootPart rw initrd=/initramfs-linux.img" 
 	fi
 	shopt -u nocasematch
 }
