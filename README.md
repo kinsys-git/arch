@@ -1,6 +1,8 @@
 # arch
 Basic arch installer
 
+Doesn't really work as intentioned at the moment.
+
 *Install Guide*
 ---
 1. Boot into the Arch Linux iso
