@@ -104,7 +104,7 @@ wminstall() {
 software() {
 	clear
 	echo "Setting up additional software"
-	pacman -S wget \ 
+	pacman -S wget \
 		rsync \
 	       	wpa_supplicant \
 	       	bc grub \
@@ -116,7 +116,6 @@ software() {
 	       	git \
 	       	dialog \
 	       	vim --noconfirm --needed
-	systemctl enable NetworkManager
 }
 
 passwords() {
