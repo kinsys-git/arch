@@ -7,7 +7,8 @@ Basic arch installer with optional WM/DE install
 2. Connect to the internet
 3. Partition your disks, and remember or write down where you want your mounts
 4. Format your partitions - home partition optional (mkfs.ext4 /dev/[PARTITION])
-5. Run the following commands:
+5. Ensure you have an EFI partition that's formatted in fat32 on your install drive (fdisk gpt type 1 / mkfs.vfat -F 32 /dev/[PARTITION])
+6. Run the following commands:
 ```
 wget https://raw.githubusercontent.com/soripants/arch/master/install.sh
 chmod +x install.sh
