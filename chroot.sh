@@ -39,7 +39,7 @@ bootloader() {
 	clear
 	echo "Setting up bootloader"
 	mkinitcpio -p linux
-	grub-install --recheck --target=i386-pc $bootDisk
+	grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=ARCH
 	grub-mkconfig -o /boot/grub/grub.cfg
 }
 
@@ -67,18 +67,6 @@ adduser() {
 	echo "$userName ALL=(ALL) ALL" >> /etc/sudoers
 }
 
-pacaurinstall() {
-	clear
-	if [ "$pacaurChoice" == y -o "$pacaurChoice" == Y ]
-		then
-		su "$userName" -c "git clone https://aur.archlinux.org/pikaur-git"
-		cd pikaur-git
-		su "$userName" -c "makepkg -fsri"
-		cd ..
-		rm -rf pikaur-git
-	fi
-
-}
 
 wminstall() {
 	clear
@@ -87,19 +75,25 @@ wminstall() {
 		echo "Setting up WM"
   	if [ "$wmChoice" = "1" ]
   	then
-  		pacman -S plasma-meta kde-applications-meta plasma-nm sddm --noconfirm --needed
+  		pacman -S budgie-desktop gnome sddm --noconfirm --needed
+		systemctl enable sddm
   	elif [ "$wmChoice" = "2" ]
   	then
   		pacman -S plasma-meta plasma-nm sddm --noconfirm --needed
+		systemctl enable sddm
   	elif [ "$wmChoice" = "3" ]
   	then
   		pacman -S gnome gdm --noconfirm --needed
+		systemctl enable sddm
   	elif [ "$wmChoice" = "4" -o "$wmChoice" = "straws" ]
   	then
   		pacman -S i3 dmenu network-manager-applet blueman sddm --noconfirm --needed
+		systemctl enable sddm
+		systemctl enable bluetooth
   	elif [ "$wmChoice" = "5" ]
   	then
   		pacman -S xfce4 sddm --noconfirm --needed
+		systemctl enable sddm
   	else
   		wm = "none"
 	  fi
@@ -107,36 +101,22 @@ wminstall() {
 
 }
 
-kdecustom() {
-	clear
-	if [ "$wmChoice" = "1" ]
-		then
-		echo "Setting up custom KDE install"
-  	pacman -S svn --noconfirm --needed
-	  cd /home/$userName/
-  	svn checkout https://github.com/maelodic/maelo-arch-install-kde/trunk/dotfiles
-  	ln -s dotfiles/config /home/$userName/.config
-	  ln -s dotfiles/local /home/$userName/.local
-  	ln -s dotfiles/kde4 /home/$userName/.kde4
-  	find . -exec chown $userName.$userName {} \;
-  	rm -rf
-	fi
-
-}
-
 software() {
 	clear
 	echo "Setting up additional software"
-	pacman -S wget rsync wpa_supplicant bc grub efibootmgr os-prober sudo networkmanager reflector git dialog sddm xorg-server xorg-font-util xorg-xinit xterm xf86-video-vesa xf86-input-synaptics vim xorg-xkill --noconfirm --needed
-       	if [ "$wmChoice" = "3" ]
-       		then
-		systemctl enable gdm.service
-		systemctl enable NetworkManager
-	elif [ "$wmChoice" = "1" -o "$wmChoice" = "2" -o "$wmChoice" = "4" -o "$wmChoice" = "5" ]
-		then
-		systemctl enable sddm.service
-		systemctl enable NetworkManager
-	fi
+	pacman -S wget \ 
+		rsync \
+	       	wpa_supplicant \
+	       	bc grub \
+	       	efibootmgr \
+	       	os-prober \
+	       	sudo \
+	       	networkmanager \
+	       	reflector \
+	       	git \
+	       	dialog \
+	       	vim --noconfirm --needed
+	systemctl enable NetworkManager
 }
 
 passwords() {
@@ -148,17 +128,6 @@ passwords() {
 	passwd "$userName"
 }
 
-dotfiles() {
-	if [ "$wmChoice" = "straws" ]
-	then
-		su "$userName" -c "cd ~"
-		su "$userName" -c "mkdir tmp"
-		su "$userName" -c "git clone https://github.com/maelodic/dotfiles"
-		su "$userName" -c "cd dotfiles"
-		su "$userName" -c "chmod +x all.sh"
-		su "$userName" -c "sh all.sh"
-	fi
-}
 
 main() {
 	initpackages	#Update reps
@@ -167,12 +136,9 @@ main() {
 	makeswap	#Install swapfile if selected
 	drivers 	#Install drivers if previously specified
 	adduser		#Add user with sudoers access
-	kdecustom   	#Install KDE custom setup if selected
 	software	#Install additional software
 	wminstall   	#Install WM
-	pacaurinstall	#Install pacaur
 	bootloader	#Set up grub
-	dotfiles	#Personalized install
 	passwords	#Set user and root passwords
 	rm /root/chroot.sh
 }

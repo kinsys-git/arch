@@ -2,6 +2,8 @@
 
 variables() {
 	clear
+	echo "Warning: This is currently configured for UEFI systems only. Please quit if using legacy boot (CTRL+C). Press enter to continue..."
+	read
 	echo "Hostname?: "
 	read hostname
 	export hostname
@@ -67,18 +69,6 @@ variables() {
 	read nvidiaGfx
 	export nvidiaGfx
 	clear
-	echo "Pick a WM"
-	echo "(1) KDE Custom"
-	echo "(2) KDE Stock"
-	echo "(3) Gnome Shell"
-	echo "(4) i3"
-	echo "(5) XFCE"
-	echo "(Anything else) None"
-	echo " "
-	echo "Choice?: "
-	read wmChoice
-	export wmChoice
-	clear
 	echo "Create swapfile? (Y/n): "
 	read swapfileChoice
 	export swapfileChoice
@@ -92,9 +82,17 @@ variables() {
 		export swapsize
 	fi
 	clear
-	#echo "Install pikaur? (Y/n): "
-	#read pacaurChoice
-	#export pacaurChoice
+	echo "Pick a WM:"
+	echo "(1) Budgie"
+	echo "(2) KDE"
+	echo "(3) Gnome"
+	echo "(4) i3"
+	echo "(5) XFCE"
+	echo "(N) None"
+	echo " "
+	echo "Choice?: "
+	read wmChoice
+	export wmChoice
 }
 
 mounting() {
@@ -106,14 +104,14 @@ mounting() {
 	elif [ "$mountChoice" = "2" ]
 		then
 		mount $rootPart /mnt
-		mkdir /mnt/boot
-		mount $bootPart /mnt/boot
+		mkdir -p /mnt/boot/efi
+		mount $bootPart /mnt/boot/efi
 	elif [ "$mountChoice" = "3" ]
 		then
 		mount $rootPart /mnt
-		mkdir /mnt/boot
+		mkdir -p /mnt/boot/efi
 		mkdir /mnt/home
-		mount $bootPart /mnt/boot
+		mount $bootPart /mnt/boot/efi
 		mount $homePart /mnt/home
 	elif [ "$mountChoice" = "4" ]
 		then
