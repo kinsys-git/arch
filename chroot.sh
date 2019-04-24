@@ -107,7 +107,8 @@ software() {
 	pacman -S wget \
 		rsync \
 	       	wpa_supplicant \
-	       	bc grub \
+	       	bc \
+		grub \
 	       	efibootmgr \
 	       	os-prober \
 	       	sudo \
