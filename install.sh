@@ -136,7 +136,7 @@ install() {
 	genfstab -U /mnt >> /mnt/etc/fstab
 	if [ "$(uname -m)" = x86_64 ]
 		then
-		sed -i'' '93,94 s/^#//' /mnt/etc/pacman.conf
+		sed -i'' '92,93,94 s/^#//' /mnt/etc/pacman.conf
 	fi
 	sed -i '37iILoveCandy' /mnt/etc/pacman.conf
 }

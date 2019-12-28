@@ -104,7 +104,7 @@ wminstall() {
 software() {
 	clear
 	echo "Setting up additional software"
-	pacman -S wget rsync wpa_supplicant bc grub efibootmgr os-prober sudo networkmanager reflector git dialog vim --noconfirm --needed
+	pacman -S linux wget rsync wpa_supplicant bc grub efibootmgr os-prober sudo networkmanager reflector git dialog vim --noconfirm --needed
 }
 
 passwords() {
