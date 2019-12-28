@@ -3,7 +3,7 @@
 initpackages() {
 	clear
 	echo "Initializing packages"
-	pacman -Sy
+	pacman -Syyu --noconfirm
 }
 
 hostname() {
@@ -104,19 +104,7 @@ wminstall() {
 software() {
 	clear
 	echo "Setting up additional software"
-	pacman -S wget \
-		rsync \
-	       	wpa_supplicant \
-	       	bc \
-		grub \
-	       	efibootmgr \
-	       	os-prober \
-	       	sudo \
-	       	networkmanager \
-	       	reflector \
-	       	git \
-	       	dialog \
-	       	vim --noconfirm --needed
+	pacman -S wget rsync wpa_supplicant bc grub efibootmgr os-prober sudo networkmanager reflector git dialog vim --noconfirm --needed
 }
 
 passwords() {
@@ -131,15 +119,15 @@ passwords() {
 
 main() {
 	initpackages	#Update reps
-	hostname	#Setup hostname
-	timekeeping	#Set up timzone and generate the locale
-	makeswap	#Install swapfile if selected
-	drivers 	#Install drivers if previously specified
-	adduser		#Add user with sudoers access
-	software	#Install additional software
+	hostname		#Setup hostname
+	timekeeping		#Set up timzone and generate the locale
+	makeswap		#Install swapfile if selected
+	software		#Install additional software
+	drivers 		#Install drivers if previously specified
+	adduser			#Add user with sudoers access
 	wminstall   	#Install WM
-	bootloader	#Set up grub
-	passwords	#Set user and root passwords
+	bootloader		#Set up grub
+	passwords		#Set user and root passwords
 	rm /root/chroot.sh
 }
 
