@@ -8,6 +8,7 @@ variables() {
 	read hostname
 	export hostname
 	clear
+	fdisk -l | grep "Disk /dev"
 	echo "Boot disk? (Ex. /dev/sda): "
 	read bootDisk
 	export bootDisk
@@ -16,47 +17,58 @@ variables() {
 	read userName
 	export userName
 	clear
-	echo "(1) Root only"
-	echo "(2) Root and boot"
-	echo "(3) Root, boot, and home"
-	echo "(4) Root and home"
-	echo " "
-	echo "Enter: "
-	read mountChoice
-	clear
-	echo "Enter your directories for mounting"
-	if [ "$mountChoice" = "1" ]
+	echo "Do you already have your file system mounted? (y/N)"
+	read mountBool
+	if [ "$mountBool" != Y -o "$mountBool" != y ]
 		then
-		echo "Root partition: "
-		read rootPart
-	elif [ "$mountChoice" = "2" ]
-		then
-		echo "Root partition: "
-		read rootPart
-		export rootPart
+		echo "Do you need to format your boot disk? (y/N)"
+		read formatBool
+		if [ "$formatBool" == Y -o "$formatBool" == y ]
+			then
+			fdisk $bootDisk
+		fi
+		echo "(1) Root only"
+		echo "(2) Root and boot"
+		echo "(3) Root, boot, and home"
+		echo "(4) Root and home"
 		echo " "
-		echo "Boot partition: "
-		read bootPart
-	elif [ "$mountChoice" = "3" ]
-		then
-		echo "Root partition: "
-		read rootPart
-		export rootPart
-		echo " "
-		echo "Boot partition: "
-		read bootPart
-		export bootPart
-		echo " "
-		echo "Home partition: "
-		read homePart
-	elif [ "$mountChoice" = "4" ]
-		then
-		echo "Root partition: "
-		read rootPart
-		export rootPart
-		echo " "
-		echo "Home partition: "
-		read homePart
+		echo "Enter: "
+		read mountChoice
+		clear
+		echo "Enter your directories for mounting"
+		if [ "$mountChoice" = "1" ]
+			then
+			echo "Root partition: "
+			read rootPart
+		elif [ "$mountChoice" = "2" ]
+			then
+			echo "Root partition: "
+			read rootPart
+			export rootPart
+			echo " "
+			echo "Boot partition: "
+			read bootPart
+		elif [ "$mountChoice" = "3" ]
+			then
+			echo "Root partition: "
+			read rootPart
+			export rootPart
+			echo " "
+			echo "Boot partition: "
+			read bootPart
+			export bootPart
+			echo " "
+			echo "Home partition: "
+			read homePart
+		elif [ "$mountChoice" = "4" ]
+			then
+			echo "Root partition: "
+			read rootPart
+			export rootPart
+			echo " "
+			echo "Home partition: "
+			read homePart
+		fi
 	fi
 	clear
 	echo "Intel Graphics Drivers? (y/N): "
@@ -136,9 +148,11 @@ install() {
 	genfstab -U /mnt >> /mnt/etc/fstab
 	if [ "$(uname -m)" = x86_64 ]
 		then
-		sed -i'' '92,93,94 s/^#//' /mnt/etc/pacman.conf
+		echo "[multilib]" >> /mnt/etc/pacman.conf
+		echo "Include = /etc/pacman.d/mirrorlist" >> /mnt/etc/pacman.conf
 	fi
 	sed -i '37iILoveCandy' /mnt/etc/pacman.conf
+	sed -i '33Color' /mnt/etc/pacman.conf
 }
 
 passtochroot() {
