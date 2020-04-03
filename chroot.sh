@@ -131,9 +131,6 @@ main() {
 	rm /root/chroot.sh
 }
 
-custom() {
-
-}
 
 mainCustom() {
 	initpackages
